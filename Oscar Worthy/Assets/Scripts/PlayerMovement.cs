@@ -9,8 +9,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 Velocity = new Vector3();
     public enum JumpState {grounded, rising, hovering, falling, freeFalling}
+    public enum RunState {running, idle}
 
     public JumpState jumpState = JumpState.falling;
+    public RunState runState = RunState.idle;
 
     public bool grounded = false;
 
@@ -122,6 +124,15 @@ public class PlayerMovement : MonoBehaviour
 
         movement.x = Input.GetAxisRaw("KeyboardAD");
         movement.z = Input.GetAxisRaw("KeyboardWS");
+
+        if (movement.magnitude > 0)
+        {
+            runState = RunState.running;
+        }
+        else
+        {
+            runState = RunState.idle;
+        }
 
         movement = movement.normalized * speed;
 
