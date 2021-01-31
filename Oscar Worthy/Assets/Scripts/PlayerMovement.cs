@@ -86,8 +86,6 @@ public class PlayerMovement : MonoBehaviour
         {
             float angle = Vector3.SignedAngle(transform.forward, velocityNoY, Vector3.up);// Quaternion.Angle(transform.rotation, Quaternion.LookRotation(velocityNoY));
 
-            Debug.Log(angle);
-
             transform.Rotate(0, Mathf.Clamp(angle, -turnspeed, turnspeed), 0);
         }
 
@@ -168,7 +166,9 @@ public class PlayerMovement : MonoBehaviour
         return movement;
     }
 
-#endregion
+    #endregion
+
+    float hoverTimer = 0;
 
     void HandleJumpAndGravity()
     {
@@ -182,7 +182,14 @@ public class PlayerMovement : MonoBehaviour
         if ((jumpState == JumpState.rising || jumpState == JumpState.falling) && Velocity.y < 0 && Input.GetButton("Jump"))
         {
             jumpState = JumpState.hovering;
+            hoverTimer = 1.5f;
             Velocity.y = 0;
+        }
+
+        if (jumpState == JumpState.hovering)
+        {
+            hoverTimer -= Time.deltaTime;
+            if (hoverTimer < 0) jumpState = JumpState.freeFalling;
         }
 
         // Transition to falling if we're hovering and we let go of the spacebar
@@ -244,8 +251,6 @@ public class PlayerMovement : MonoBehaviour
     private List<GameObject> currentGrounds = new List<GameObject>(); 
     private void OnGroundEnter(object _, Collider ground)
     {
-        Debug.Log("ENTERED GROUND:" + ground.name);
-
         currentGrounds.Add(ground.gameObject);
 
         RefreshGroundState();
@@ -253,8 +258,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnGroundExit(object _, Collider ground)
     {
-        Debug.Log("LEFT GROUND:" + ground.name);
-
         currentGrounds.Remove(ground.gameObject);
 
         RefreshGroundState();
