@@ -30,10 +30,24 @@ public class OrbitingObject : MonoBehaviour
         this.speedMax = speedMax;
         this.rotationSpeedMin = rotationSpeedMin;
         this.rotationSpeedMax = rotationSpeedMax;
-        MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
-        MeshFilter filter = gameObject.AddComponent<MeshFilter>();
-        filter.mesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
-        renderer.material = meshObject.GetComponent<MeshRenderer>().sharedMaterial;
+
+        if (meshObject.GetComponent<MeshRenderer>() != null)
+        {
+            MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
+            MeshFilter filter = gameObject.AddComponent<MeshFilter>();
+            filter.mesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+            renderer.material = meshObject.GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
+        GameObject tempObj = Instantiate(meshObject);
+
+        foreach(Transform child in tempObj.transform)
+        {
+            child.parent = transform;
+        }
+
+        Destroy(tempObj);
+
         transform.localScale = meshObject.transform.localScale * Random.Range(scaleMin, scaleMax);
     }
 
