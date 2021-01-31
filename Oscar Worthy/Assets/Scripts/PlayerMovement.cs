@@ -15,14 +15,16 @@ public class PlayerMovement : MonoBehaviour
     public RunState runState = RunState.idle;
 
     public bool grounded = false;
+	
+	private Animator anim;
 
     Vector3 fallReturnPosition;     // The position to return the player to if they fall off the edge
     float returnHeight = -20.0f;    // The height at which the player is teleported back onto the level after falling off
     
-    float speed = 0.02f;
-    float jumpSpeed = 0.04f;
-    float gravity = -0.0002f;
-    float hoverGravity = -0.00001f;
+    public float speed = 0.02f;
+    public float jumpSpeed = 0.04f;
+    public float gravity = -0.0002f;
+    public float hoverGravity = -0.00001f;
 
     // this can be moved to another script later
     int health = 5;
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         groundCollider.OnGroundExit += OnGroundExit;
 
         fallReturnPosition = this.transform.position;
+		
+		anim = gameObject.GetComponentInChildren<Animator> (); 
 
         //capsuleCollider = GetComponent<CapsuleCollider>();
     }
@@ -53,7 +57,26 @@ public class PlayerMovement : MonoBehaviour
         ApplyMovement();
 
         CatchFallenPlayer();
+		
+		AnimationHandler();
     }
+	
+	void AnimationHandler()
+	{
+		if(jumpState != JumpState.grounded)
+		{
+			anim.SetBool ("Grounded", false);
+		} else {
+			anim.SetBool ("Grounded", true);
+		}
+		
+		if(runState != RunState.running)
+		{
+			anim.SetBool ("Running", false);
+		} else {
+			anim.SetBool ("Running", true);
+		}
+	}
 
     void ApplyMovement()
     {
