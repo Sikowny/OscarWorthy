@@ -10,19 +10,31 @@ public class OrbitingObject : MonoBehaviour
     public float speedMin;
     public float speedMax;
 
+    public float rotationSpeedMin;
+    public float rotationSpeedMax;
+
+    public float scaleMin;
+    public float scaleMax;
+
     private Vector3 axis;
     private float radius;
     private float speed;
+    private Vector3 rotationEulers;
+    private float rotationSpeed;
 
-    void SetParams(float radiusMin, float radiusMax, float speedMin, float speedMax, GameObject meshObject)
+    public void SetParams(float radiusMin, float radiusMax, float speedMin, float speedMax, float rotationSpeedMin, float rotationSpeedMax, float scaleMin, float scaleMax, GameObject meshObject)
     {
         this.radiusMin = radiusMin;
         this.radiusMax = radiusMax;
         this.speedMin = speedMin;
         this.speedMax = speedMax;
-        gameObject.AddComponent<MeshRenderer>();
+        this.rotationSpeedMin = rotationSpeedMin;
+        this.rotationSpeedMax = rotationSpeedMax;
+        MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
         MeshFilter filter = gameObject.AddComponent<MeshFilter>();
         filter.mesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+        renderer.material = meshObject.GetComponent<MeshRenderer>().sharedMaterial;
+        transform.localScale = meshObject.transform.localScale * Random.Range(scaleMin, scaleMax);
     }
 
     // Start is called before the first frame update
@@ -30,13 +42,16 @@ public class OrbitingObject : MonoBehaviour
     {
         radius = Random.Range(radiusMin, radiusMax);
         speed = Random.Range(speedMin, speedMax);
-        transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * radius;
+        rotationSpeed = Random.Range(rotationSpeedMin, rotationSpeedMax);
+        transform.position = transform.parent.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * radius;
         axis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        rotationEulers = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * rotationSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(Vector3.zero, axis, speed);
+        transform.RotateAround(transform.parent.position, axis, speed);
+        transform.Rotate(rotationEulers);
     }
 }
