@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
     GroundCollider groundCollider;
 
     public Vector3 Velocity = new Vector3();
-    enum JumpState {grounded, rising, hovering, falling, freeFalling}
+    public enum JumpState {grounded, rising, hovering, falling, freeFalling}
 
-    JumpState jumpState = JumpState.falling;
+    public JumpState jumpState = JumpState.falling;
 
     public bool grounded = false;
 
@@ -191,18 +191,33 @@ public class PlayerMovement : MonoBehaviour
     //    }
     //}
 
-    private GameObject currentGround;
+    private List<GameObject> currentGrounds = new List<GameObject>(); 
     private void OnGroundEnter(object _, Collider ground)
     {
-        currentGround = ground.gameObject;
-        jumpState = JumpState.grounded;
+        Debug.Log("ENTERED GROUND:" + ground.name);
+
+        currentGrounds.Add(ground.gameObject);
+
+        RefreshGroundState();
     }
 
     private void OnGroundExit(object _, Collider ground)
     {
-        if (currentGround == ground.gameObject)
+        Debug.Log("LEFT GROUND:" + ground.name);
+
+        currentGrounds.Remove(ground.gameObject);
+
+        RefreshGroundState();
+    }
+
+    private void RefreshGroundState()
+    {
+        if (currentGrounds.Count > 0)
         {
-            currentGround = null;
+            jumpState = JumpState.grounded;
+        }
+        else
+        {
             jumpState = JumpState.falling;
         }
     }
