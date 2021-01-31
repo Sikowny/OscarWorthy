@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         groundCollider.OnGroundExit += OnGroundExit;
 
         fallReturnPosition = this.transform.position;
+
+        //capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -44,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
 
         HandleHorizontalMovement();
 
+        TurnTowardMovingDirection();
+
         ApplyMovement();
 
         CatchFallenPlayer();
@@ -51,7 +55,42 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyMovement()
     {
+        //CheckForWalls();
+
         transform.position += Velocity;
+    }
+
+    //// Making the assumption that we're using a Capsule for our collider. Not good form, but not much time
+    //CapsuleCollider capsuleCollider;
+    //void CheckForWalls()
+    //{
+    //    RaycastHit hit;
+
+    //    Vector3 p1 = transform.position - capsuleCollider.center + Vector3.up * capsuleCollider.radius;
+    //    Vector3 p2 = transform.position + capsuleCollider.center - Vector3.up * capsuleCollider.radius;
+
+    //    if (Physics.CapsuleCast(p1, p2, capsuleCollider.radius, Velocity, out hit)){
+    //        if (hit.distance < Velocity.magnitude)
+    //            Velocity = Velocity.normalized * hit.distance;
+    //    }
+    //}
+
+    public float turnspeed = 1.5f;
+    void TurnTowardMovingDirection()
+    {
+        Vector3 velocityNoY = new Vector3(Velocity.x, 0, Velocity.z);
+
+        if (velocityNoY.magnitude > 0)
+        {
+            float angle = Vector3.SignedAngle(transform.forward, velocityNoY, Vector3.up);// Quaternion.Angle(transform.rotation, Quaternion.LookRotation(velocityNoY));
+
+            Debug.Log(angle);
+
+            transform.Rotate(0, Mathf.Clamp(angle, -turnspeed, turnspeed), 0);
+        }
+
+        //if (velocityNoY.magnitude > 0)
+        //    transform.rotation = Quaternion.LookRotation(velocityNoY, Vector3.up);
     }
 
 #region horizontal movement
