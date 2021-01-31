@@ -18,10 +18,11 @@ public class BaseEnemy : MonoBehaviour
     float gravity = -0.0001f;
 
     float attackRange = 2.25f;
-    float attackWindUp = 2.0f;      // time the enemy must stand still before attacking
-    float attackWindDown = 1.0f;    // time the enemy stands still after an attack
+    float attackWindUp = 1.0f;      // time the enemy must stand still before attacking
+    float attackWindDown = 0.5f;    // time the enemy stands still after an attack
     float attackTimer;
     AttackState currAttackState = AttackState.OutOfRange;
+    Vector3 attackDirection;
 
     public GameObject attackHitboxPrefab;
 
@@ -51,11 +52,18 @@ public class BaseEnemy : MonoBehaviour
 
     void HandleHorizontalMovement()
     {
+        // Rotate to look at the player
+        // To ensure the enemy remains upright, the enemy's own y-position is used when determining where to look
+        Vector3 lookTarget = new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z);
+        transform.LookAt(lookTarget);
+
         Vector3 vectorToPlayer = player.transform.position - this.transform.position;
         if (vectorToPlayer.magnitude <= attackRange)
         {
             currAttackState = AttackState.WindingUp;
             attackTimer = attackWindUp;
+            attackDirection = (player.transform.position - this.transform.position).normalized;
+
             velocity = new Vector3(0, 0, 0);
         }
         else {
@@ -98,8 +106,8 @@ public class BaseEnemy : MonoBehaviour
             }
         } else if(currAttackState == AttackState.Attacking)
         {
-            Vector3 attackDirection = (player.transform.position - this.transform.position).normalized;
-            Instantiate(attackHitboxPrefab, transform.position + attackDirection * attackRange * 0.5f, transform.rotation);
+            Vector3 attackHitboxPos = transform.position + (attackDirection * attackRange * 0.5f) + new Vector3(0, 1.25f, 0);
+            Instantiate(attackHitboxPrefab, attackHitboxPos, transform.rotation);
 
             attackTimer = attackWindDown;
             currAttackState = AttackState.WindingDown;
