@@ -229,7 +229,11 @@ MonoBehaviour:
   jumpState: 3
   runState: 1
   grounded: 0
-  turnspeed: 1.5
+  speed: 0.03
+  jumpSpeed: 0.08
+  gravity: -0.0006
+  hoverGravity: -0.00001
+  turnspeed: 2
 --- !u!114 &8403406892738411522
 MonoBehaviour:
   m_ObjectHideFlags: 0
