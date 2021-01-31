@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     float gravity = -0.0002f;
     float hoverGravity = -0.00001f;
 
+    // this can be moved to another script later
+    int health = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -160,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = fallReturnPosition;
             Velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            ReceiveDamage(1);
             return true;
         } else
         {
@@ -201,5 +205,17 @@ public class PlayerMovement : MonoBehaviour
             currentGround = null;
             jumpState = JumpState.falling;
         }
+    }
+    
+    public bool ReceiveDamage(int d)
+    {
+        Debug.Log("oof!");
+        health -= d;
+        if (health <= 0)
+        {
+            Debug.Log("You ded");
+            return true;
+        }
+        return false;
     }
 }
