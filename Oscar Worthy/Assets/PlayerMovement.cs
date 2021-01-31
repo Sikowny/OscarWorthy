@@ -7,11 +7,15 @@ public class PlayerMovement : MonoBehaviour
     Camera playerCam;
 
     public Vector3 Velocity = new Vector3();
+
+    enum JumpState {grounded, rising, hovering, falling}
+
     public bool grounded = false;
 
-    float speed = 0.01f;
-    float jumpSpeed = 0.01f;
-    float gravity = -0.0001f;
+    float speed = 0.02f;
+    float jumpSpeed = 0.04f;
+    float gravity = -0.0002f;
+    float hoverGravity = -0.00001f;
 
     // Start is called before the first frame update
     void Start()
