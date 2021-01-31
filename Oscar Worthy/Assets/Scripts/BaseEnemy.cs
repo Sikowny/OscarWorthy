@@ -20,8 +20,8 @@ public class BaseEnemy : MonoBehaviour
     float playerDetectionRange = 15.0f; // How close the player must be for the enemy to pursue them
 
     float attackRange = 2.25f;
-    float attackWindUp = 1.0f;      // time the enemy must stand still before attacking
-    float attackWindDown = 0.5f;    // time the enemy stands still after an attack
+    float attackWindUp = 0.5f;      // time the enemy must stand still before attacking
+    float attackWindDown = 0.25f;    // time the enemy stands still after an attack
     float attackTimer;
     AttackState currAttackState = AttackState.OutOfRange;
     Vector3 attackDirection;
@@ -33,7 +33,6 @@ public class BaseEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         active = false;
         attackTimer = attackWindUp;
     }
@@ -41,6 +40,11 @@ public class BaseEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
         if (currAttackState == AttackState.OutOfRange)
         {
             HandleHorizontalMovement();
@@ -143,7 +147,8 @@ public class BaseEnemy : MonoBehaviour
         else if (currAttackState == AttackState.Attacking)
         {
             Vector3 attackHitboxPos = transform.position + (attackDirection * attackRange * 0.5f) + new Vector3(0, 1.25f, 0);
-            Instantiate(attackHitboxPrefab, attackHitboxPos, transform.rotation);
+            GameObject attackHitbox = Instantiate(attackHitboxPrefab, attackHitboxPos, transform.rotation);
+            attackHitbox.transform.localScale = new Vector3(1, 1, attackRange);
 
             attackTimer = attackWindDown;
             currAttackState = AttackState.WindingDown;
