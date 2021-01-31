@@ -1,17 +1,11 @@
 fileFormatVersion: 2
-guid: 78e2337f9ba5c8943b356a4145ed10c2
+guid: 7a4cfa4bb4e4a944ba3ca529552448cf
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 1220396213081368378
-    second: Player|Idle
-  - first:
-      74: 2684739523342222611
-    second: Player|Ref
-  - first:
-      74: -8143441008401525273
-    second: Player|Run
+      74: -1196054550653525627
+    second: Player_Mesh|Ref
   externalObjects: {}
   materials:
     materialImportMode: 2
