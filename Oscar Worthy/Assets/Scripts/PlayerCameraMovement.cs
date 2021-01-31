@@ -8,8 +8,8 @@ public class PlayerCameraMovement : MonoBehaviour
     float rotation = 0f;
     float rotationTime = 0.2f;
 
-    float cameraDistance = -12;
-    float cameraHeight = 6.5f;
+    float cameraDistance = -13;
+    float cameraHeight = 7;
     float cameraVerticalRotation = 25;
 
     // Start is called before the first frame update

@@ -1362,7 +1362,47 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 448640571405528137, guid: 1d1f9c67c54f4f84eac5098d547c3224,
+    - target: {fileID: 1077287457776436222, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077287457776436222, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077287457776436222, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3765910044453894948, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3765910044453894948, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: nextSceneName
+      value: Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011195729194429701, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011195729194429701, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011195729194429701, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011195729194429701, guid: 5c05d306119237f409d17aaede7d843a,
         type: 3}
       propertyPath: m_Name
       value: Ground (9)
@@ -1431,6 +1471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763279104883654915, guid: 5c05d306119237f409d17aaede7d843a,
+        type: 3}
+      propertyPath: nextSceneName
+      value: Level2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d1f9c67c54f4f84eac5098d547c3224, type: 3}
