@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1534860172527848942}
   - component: {fileID: 2015649483040115746}
+  - component: {fileID: 4629841572143399946}
+  - component: {fileID: 5998674221277063380}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -46,7 +48,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackHitboxPrefab: {fileID: 7174629969145099606, guid: 2ab90b4d508a1cf4a8688b8ac5411076,
     type: 3}
-  currAttackHitbox: {fileID: 0}
+--- !u!136 &4629841572143399946
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3407804594022097194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &5998674221277063380
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3407804594022097194}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4435032078250391988
 GameObject:
   m_ObjectHideFlags: 0
