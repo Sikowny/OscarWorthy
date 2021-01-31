@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         {
             float angle = Vector3.SignedAngle(transform.forward, velocityNoY, Vector3.up);// Quaternion.Angle(transform.rotation, Quaternion.LookRotation(velocityNoY));
 
-            Debug.Log(angle);
+            // Debug.Log(angle);
 
             transform.Rotate(0, Mathf.Clamp(angle, -turnspeed, turnspeed), 0);
         }
