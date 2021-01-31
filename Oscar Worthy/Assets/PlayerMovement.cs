@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 Velocity = new Vector3();
     public bool grounded = false;
 
+    Vector3 fallReturnPosition;     // The position to return the player to if they fall off the edge
+    float returnHeight = -20.0f;    // The height at which the player is teleported back onto the level after falling off
+
     float speed = 0.01f;
     float jumpSpeed = 0.01f;
     float gravity = -0.0001f;
@@ -17,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        fallReturnPosition = this.transform.position;
     }
 
     // Update is called once per frame
@@ -27,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
         HandleJumpAndGravity();
 
         ApplyMovement();
+
+        CatchFallenPlayer();
     }
 
     void ApplyMovement()
@@ -81,6 +88,24 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Velocity.y = 0;
+        }
+    }
+
+    // Returns the player to the level if they fall off
+    bool CatchFallenPlayer()
+    {
+        if(transform.position.y < returnHeight)
+        {
+            transform.position = fallReturnPosition;
+            Velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            return true;
+        } else
+        {
+            if(grounded)
+            {
+                fallReturnPosition = transform.position;
+            }
+            return false;
         }
     }
 
