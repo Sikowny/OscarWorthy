@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     float hoverGravity = -0.00001f;
 
     // this can be moved to another script later
-    int health = 5;
+    int health = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -282,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("You ded");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             return true;
         }
         return false;
