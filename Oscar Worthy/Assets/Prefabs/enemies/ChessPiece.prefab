@@ -338,6 +338,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1534860172527848942, guid: b1f861042277bb24b9f56d51ec38a614,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534860172527848942, guid: b1f861042277bb24b9f56d51ec38a614,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534860172527848942, guid: b1f861042277bb24b9f56d51ec38a614,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534860172527848942, guid: b1f861042277bb24b9f56d51ec38a614,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -386,6 +401,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2015649483040115746, guid: b1f861042277bb24b9f56d51ec38a614,
+        type: 3}
+      propertyPath: attackHitboxPrefab
+      value: 
+      objectReference: {fileID: 7174629969145099606, guid: 2ab90b4d508a1cf4a8688b8ac5411076,
+        type: 3}
     - target: {fileID: 3407804594022097194, guid: b1f861042277bb24b9f56d51ec38a614,
         type: 3}
       propertyPath: m_Name

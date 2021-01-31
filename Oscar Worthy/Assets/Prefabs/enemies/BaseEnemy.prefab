@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bcfff278723a4488c4a31c85234d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackHitboxPrefab: {fileID: 7174629969145099606, guid: 2ab90b4d508a1cf4a8688b8ac5411076,
+    type: 3}
+  currAttackHitbox: {fileID: 0}
 --- !u!1 &4435032078250391988
 GameObject:
   m_ObjectHideFlags: 0

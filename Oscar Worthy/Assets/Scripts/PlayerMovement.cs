@@ -119,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool ReceiveDamage(int d)
     {
+        Debug.Log("oof!");
         health -= d;
         if (health <= 0)
         {
