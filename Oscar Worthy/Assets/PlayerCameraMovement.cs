@@ -8,7 +8,7 @@ public class PlayerCameraMovement : MonoBehaviour
     float rotation = 0f;
     float rotationTime = 0.2f;
 
-    float cameraDistance = -6;
+    float cameraDistance = -8;
     float cameraHeight = 3;
     float cameraVerticalRotation = 10;
 

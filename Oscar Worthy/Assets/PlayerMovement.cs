@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Camera playerCam;
+    GroundCollider groundCollider;
 
     public Vector3 Velocity = new Vector3();
+    enum JumpState {grounded, rising, hovering, falling, freeFalling}
 
-    enum JumpState {grounded, rising, hovering, falling}
+    JumpState jumpState = JumpState.falling;
 
     public bool grounded = false;
 
@@ -24,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        groundCollider = transform.Find("GroundCollider").gameObject.GetComponent<GroundCollider>();
+
+        groundCollider.OnGroundEnter += OnGroundEnter;
+        groundCollider.OnGroundExit += OnGroundExit;
 
         fallReturnPosition = this.transform.position;
     }
@@ -31,9 +37,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleHorizontalMovement();
-
         HandleJumpAndGravity();
+
+        HandleHorizontalMovement();
 
         ApplyMovement();
 
@@ -45,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
         transform.position += Velocity;
     }
 
+#region horizontal movement
+
     void HandleHorizontalMovement()
     {
         Vector3 movement = new Vector3();
@@ -53,15 +61,25 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 worldMovement = ConvertHorizontalCameraToWorld(movement);
 
-        Velocity = new Vector3(worldMovement.x, Velocity.y, worldMovement.z);
+        Vector3 slopeMovement = HandleSlopes(worldMovement);
+
+        if (jumpState == JumpState.grounded)
+        {
+            Velocity = slopeMovement;
+        }
+        else
+        {
+            Velocity = new Vector3(worldMovement.x, Velocity.y, worldMovement.z);
+        }
+
     }
 
     Vector3 GetHorizontalMovementInput()
     {
         Vector3 movement = new Vector3();
 
-        movement.x = Input.GetAxis("KeyboardAD");
-        movement.z = Input.GetAxis("KeyboardWS");
+        movement.x = Input.GetAxisRaw("KeyboardAD");
+        movement.z = Input.GetAxisRaw("KeyboardWS");
 
         movement = movement.normalized * speed;
 
@@ -77,15 +95,55 @@ public class PlayerMovement : MonoBehaviour
         return worldMovement;
     }
 
+    Vector3 HandleSlopes(Vector3 movement)
+    {
+        if (jumpState == JumpState.grounded)
+        {
+            Ray ray = new Ray(transform.position, Vector3.down);
+            RaycastHit hit;
+
+            int layerMask = 1 << 6;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                if (Vector3.Angle(hit.normal, Vector3.up) < 45)
+                {
+                    Vector3 groundNormal = hit.normal;
+                    movement = Vector3.ProjectOnPlane(movement, groundNormal);
+                }
+            }
+        }
+        return movement;
+    }
+
+#endregion
+
     void HandleJumpAndGravity()
     {
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (Input.GetButtonDown("Jump") && jumpState == JumpState.grounded)
         {
-            Velocity.y = jumpSpeed;   
-            grounded = false;
+            Velocity.y = jumpSpeed;
+            jumpState = JumpState.rising;
         }
 
-        if (!grounded)
+        // Transition to hovering if we're rising and just started falling
+        if ((jumpState == JumpState.rising || jumpState == JumpState.falling) && Velocity.y < 0 && Input.GetButton("Jump"))
+        {
+            jumpState = JumpState.hovering;
+            Velocity.y = 0;
+        }
+
+        // Transition to falling if we're hovering and we let go of the spacebar
+        if (jumpState == JumpState.hovering && !Input.GetButton("Jump"))
+        {
+            jumpState = JumpState.freeFalling;
+        }
+
+        // Apply gravity based on our current state
+        if (jumpState == JumpState.hovering)
+        {
+            Velocity.y += hoverGravity;
+        }
+        else if(jumpState == JumpState.freeFalling || jumpState == JumpState.falling || jumpState == JumpState.rising)
         {
             Velocity.y += gravity;
         }
@@ -105,27 +163,43 @@ public class PlayerMovement : MonoBehaviour
             return true;
         } else
         {
-            if(grounded)
-            {
-                fallReturnPosition = transform.position;
-            }
+            //if(jumpState == JumpState.grounded)
+            //{
+            //    fallReturnPosition = transform.position;
+            //}
             return false;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "ground")
+    //    {
+    //        jumpState = JumpState.grounded;
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "ground")
+    //    {
+    //        jumpState = JumpState.falling;
+    //    }
+    //}
+
+    private GameObject currentGround;
+    private void OnGroundEnter(object _, Collider ground)
     {
-        if (collision.gameObject.tag == "ground")
-        {
-            grounded = true;
-        }
+        currentGround = ground.gameObject;
+        jumpState = JumpState.grounded;
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnGroundExit(object _, Collider ground)
     {
-        if (collision.gameObject.tag == "ground")
+        if (currentGround == ground.gameObject)
         {
-            grounded = false;
+            currentGround = null;
+            jumpState = JumpState.falling;
         }
     }
 }
