@@ -230,8 +230,8 @@ MonoBehaviour:
   runState: 1
   grounded: 0
   speed: 0.03
-  jumpSpeed: 0.08
-  gravity: -0.0006
+  jumpSpeed: 0.06
+  gravity: -0.0004
   hoverGravity: -0.00001
   turnspeed: 2
 --- !u!114 &8403406892738411522
@@ -246,6 +246,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9b963a031ce384683495de1877252a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotation: 0
+  rotationTime: 0.2
+  cameraDistance: -17
+  cameraHeight: 10
+  cameraVerticalRotation: 25
 --- !u!1001 &4068622729073295254
 PrefabInstance:
   m_ObjectHideFlags: 0

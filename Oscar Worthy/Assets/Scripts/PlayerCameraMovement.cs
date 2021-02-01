@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerCameraMovement : MonoBehaviour
 {
     Camera playerCam;
-    float rotation = 0f;
-    float rotationTime = 0.2f;
+    public float rotation = 0f;
+    public float rotationTime = 0.2f;
 
-    float cameraDistance = -13;
-    float cameraHeight = 7;
-    float cameraVerticalRotation = 25;
+    public float cameraDistance = -13;
+    public float cameraHeight = 10;
+    public float cameraVerticalRotation = 25;
 
     // Start is called before the first frame update
     void Start()
