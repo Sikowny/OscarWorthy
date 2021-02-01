@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AidenTestScene.unity
-    guid: 367f73c8bbae01b4c9cbd1f79b4552c4
+    path: Assets/Scenes/levels/MainMenu.unity
+    guid: 8c26b756417361b4fb5b25c73fd554d3
   - enabled: 1
     path: Assets/Scenes/levels/Level1.unity
     guid: 61239db5b3cd6694b8674759030d8968
   - enabled: 1
     path: Assets/Scenes/levels/Level2.unity
     guid: 537aa106b7745ad4f9cd67845ef413e9
+  - enabled: 1
+    path: Assets/Scenes/levels/Level4.unity
+    guid: 89f2f375fdc9e0f469fb6094c1697f55
   m_configObjects: {}
