@@ -46,8 +46,14 @@ public class PlayerMovement : MonoBehaviour
         //capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
+    bool jumpPressed = false;
     // Update is called once per frame
     void Update()
+    {
+        ReadButtonDownInputs();
+    }
+
+    private void FixedUpdate()
     {
         HandleJumpAndGravity();
 
@@ -58,11 +64,23 @@ public class PlayerMovement : MonoBehaviour
         ApplyMovement();
 
         CatchFallenPlayer();
-		
-		AnimationHandler();
+
+        AnimationHandler();
+
+        ClearButtonDownInputs();
     }
-	
-	void AnimationHandler()
+
+    void ReadButtonDownInputs()
+    {
+        if (Input.GetButtonDown("Jump")) jumpPressed = true;
+    }
+
+    void ClearButtonDownInputs()
+    {
+        jumpPressed = false;
+    }
+
+    void AnimationHandler()
 	{
 		if(jumpState != JumpState.grounded)
 		{
@@ -196,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJumpAndGravity()
     {
-        if (Input.GetButtonDown("Jump") && jumpState == JumpState.grounded)
+        if (jumpPressed && jumpState == JumpState.grounded)
         {
             Velocity.y = jumpSpeed;
             jumpState = JumpState.rising;
@@ -275,6 +293,8 @@ public class PlayerMovement : MonoBehaviour
     private List<GameObject> currentGrounds = new List<GameObject>(); 
     private void OnGroundEnter(object _, Collider ground)
     {
+        Debug.Log("entered ground");
+
         currentGrounds.Add(ground.gameObject);
 
         RefreshGroundState();
@@ -282,6 +302,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnGroundExit(object _, Collider ground)
     {
+        Debug.Log("left ground");
+
         currentGrounds.Remove(ground.gameObject);
 
         RefreshGroundState();

@@ -12,8 +12,8 @@ public class BaseEnemy : MonoBehaviour
     Vector3 velocity = new Vector3();
     bool grounded = false;
 
-    float speed = 0.01f;
-    float accelerationRate = 0.03f;
+    float speed = 0.1f;
+    float accelerationRate = 0.3f;
     float jumpSpeed = 0.01f;
     float gravity = -0.0001f;
 
@@ -38,7 +38,7 @@ public class BaseEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(!player)
         {

@@ -63,7 +63,7 @@ public class OrbitingObject : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.RotateAround(transform.parent.position, axis, speed);
         transform.Rotate(rotationEulers);
