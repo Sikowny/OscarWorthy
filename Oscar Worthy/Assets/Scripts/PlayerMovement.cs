@@ -306,7 +306,8 @@ public class PlayerMovement : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("You ded");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("GameOver");
             return true;
         }
         return false;
